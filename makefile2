@@ -1,0 +1,53 @@
+.DEFAULT_GOAL := test
+
+#FILES is just a variable (not a file?) that includes the names of all the prject files
+#its purpose is for the check target.
+
+#the check target bellow is a loop that goes through all the components of the FILES variables
+#and r
+
+PYTHON   := python3.5
+PIP      := pip3
+MYPY     := mypy
+PYLINT   := pylint
+#
+COVERAGE := coverage-3.5
+PYDOC    := pydoc3.5
+PEP8	 := pep8
+
+.pylintrc:
+	$(PYLINT) --disable=locally-disabled --reports=no --generate-rcfile > $@
+
+.PHONY: RunCollatz.tmp
+RunCollatz.tmp: .pylintrc
+	@echo "=============================__mypy__============================";
+	-$(MYPY) doctest.py 
+	@echo "=============================__pylint__=============================";
+	-$(PYLINT) doctest.py
+	@echo "=============================__pep8__=============================";
+	-$(PEP8) doctest.py
+	#python3 RunCollatz.py < RunCollatz.in > RunCollatz.tmp
+	#-diff RunCollatz.tmp RunCollatz.out
+	@echo "=============================END_COLLATZ=============================";
+
+
+.PHONY: TestCollatz.tmp
+TestCollatz.tmp: .pylintrc
+	@echo "=============================RUN COVERAGE=============================";
+	#-$(MYPY) TestCollatz.py
+	#-$(PYLINT) TestCollatz.py
+	#-$(COVERAGE) run    --branch TestCollatz.py >  TestCollatz.tmp 2>&1
+	#-$(COVERAGE) report -m                      >> TestCollatz.tmp
+	#cat TestCollatz.tmp
+	@echo "=============================END_COVERAGE=============================";
+
+clean:
+	#note that even though i have an echo statement below, it will NOT output to the terminal
+	#for some reason. i guess the clean happens outside the terminal????
+	@echo "=============================CLEAN=============================";
+	rm -f  *.pyc
+	rm -f  RunCollatz.tmp
+	rm -rf __pycache__
+
+test: RunCollatz.tmp
+

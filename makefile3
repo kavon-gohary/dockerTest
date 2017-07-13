@@ -1,0 +1,16 @@
+.PHONY: Collatz
+Collatz:
+	-python doctest.py > collatz.txt
+
+	
+.PHONY: RunCollatz
+RunCollatz:
+	@echo "=============================__mypy__============================";
+	-mypy doctest.py 
+
+.PHONY: TestCollatz
+TestCollatz:
+	@echo "=============================__pylint__============================";
+	-pylint doctest.py
+
+	

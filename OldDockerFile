@@ -1,0 +1,6 @@
+FROM alpine 
+
+COPY dockerScript.sh /dockerScript.sh
+
+CMD ["/dockerScript.sh"]
+

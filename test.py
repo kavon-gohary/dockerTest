@@ -1,0 +1,2 @@
+player = "kavon"
+print(player)
